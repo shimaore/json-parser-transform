@@ -1,0 +1,29 @@
+{
+  "name": "json-parser-transform",
+  "version": "1.0.0",
+  "description": "JSON streaming and async parser",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --only=dev && coffee -c *.coffee.md",
+    "pretest": "npm run build && coffee -c test/*.coffee.md",
+    "test": "nyc mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gitlab.com/shimaore/json-parser-transform"
+  },
+  "author": "stephane@shimaore.net",
+  "license": "Unlicense",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coffeescript": "^2.3.2",
+    "express": "^4.16.4",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "superagent": "^4.1.0"
+  },
+  "dependencies": {
+    "parser-transform": "^1.0.0",
+    "utf8-stream": "0.0.0"
+  }
+}
