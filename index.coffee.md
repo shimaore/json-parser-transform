@@ -18,14 +18,15 @@ and mapped from Buffer to strings
 then through the lexer
 
     fs = require 'fs'
+    path = require 'path'
     {LexerParser,LexerTransform,Grammar,ParserTransform} = require 'parser-transform'
 
-    lexer  = fs.readFileSync 'json.l', 'utf8'
+    lexer  = fs.readFileSync (path.join __dirname, 'json.l'), 'utf8'
     dfas = LexerParser.parse lexer
 
 and the parser
 
-    parser = fs.readFileSync 'json.y', 'utf8'
+    parser = fs.readFileSync (path.join __dirname, 'json.y'), 'utf8'
     grammar = Grammar.fromString parser, mode:'LALR1', 'bnf'
 
     class JSONParserTransform extends ParserTransform
