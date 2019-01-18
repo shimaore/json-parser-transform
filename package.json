@@ -24,7 +24,7 @@
     "superagent": "^4.1.0"
   },
   "dependencies": {
-    "parser-transform": "^1.0.0",
+    "parser-transform": "^1.0.1",
     "utf8-stream": "0.0.0"
   }
 }
