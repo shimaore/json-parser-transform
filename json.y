@@ -91,6 +91,6 @@ start_array
 
 values
   : value            { $$ = collect_data([$1]);                 send($1); next() }
-  | values ',' value { $$ = collect_data( () => $1.concat($3)); send($3); next() }
+  | values ',' value { $$ = collect_func( () => $1.concat($3)); send($3); next() }
   ;
 
