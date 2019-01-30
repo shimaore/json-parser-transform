@@ -8,6 +8,7 @@ exponent    [eE][-+]?{digit}+
 number      -?{integer}{frac}?{exponent}?
 %%
 [{}:,\[\]]  return `'${this.text}'`
+null        return 'NULL'
 true        return 'TRUE'
 false       return 'FALSE'
 "           this.begin('string'); this.yy.string = ''

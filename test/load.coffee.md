@@ -9,6 +9,8 @@
       app = Express()
       app.get '/', (req,res) ->
         res.json [hello:'world']
+      app.get '/null', (req,res) ->
+        res.json [hello:null]
       app.get '/numbers', (req,res) ->
         res.json numbers: ['one','two','three']
       app.get '/newline', (req,res) ->
@@ -25,6 +27,16 @@
         thru Request.get 'http://127.0.0.1:3000'
         .on 'data', ({prefix,value}) ->
           expect(value).to.have.property 'hello', 'world'
+          done()
+
+      it 'should parse null', (done) ->
+        m = require '..'
+
+        thru = m.thru (prefix) ->
+          prefix.length is 1 and prefix[0] is 0
+        thru Request.get 'http://127.0.0.1:3000/null'
+        .on 'data', ({prefix,value}) ->
+          expect(value).to.have.property 'hello', null
           done()
 
       it 'should process the example in README', (done) ->
