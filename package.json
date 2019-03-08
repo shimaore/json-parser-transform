@@ -1,6 +1,6 @@
 {
   "name": "json-parser-transform",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "JSON streaming and async parser",
   "main": "index.js",
   "scripts": {
