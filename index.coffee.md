@@ -39,10 +39,13 @@ We make sure to create new instances for each stream, since they hold state!
 
     thru = (prefix_emit) ->
       (stream) ->
-        stream
-        .pipe utf8Stream()
-        .pipe new toStringTransform()
-        .pipe new LexerTransform dfas
-        .pipe new JSONParserTransform grammar, prefix_emit
+        pump(
+          stream,
+          utf8Stream(),
+          (new toStringTransform()),
+          (new LexerTransform dfas),
+          (new JSONParserTransform grammar, prefix_emit)
+        )
 
     module.exports = {JSONParserTransform,thru}
+    pump = require 'pump'
