@@ -27,6 +27,12 @@
           funk8: [1,2,81]
           funk9: a:3,b:'ok'
         }, null, '  ').replace(/\n/g,'\r\n')
+      app.get '/norows', (req,res) ->
+        res.send JSON.stringify total:42,rows:[]
+      app.get '/onerow', (req,res) ->
+        res.send JSON.stringify total:78,rows:[{a:3}]
+      app.get '/tworows', (req,res) ->
+        res.send JSON.stringify total:98,rows:[{a:3},{a:4}]
       server = app.listen 3000
       after ->
         server.close()
@@ -95,3 +101,45 @@
           expect(value.funk9).to.have.property 'a', 3
           expect(value.funk9).to.have.property 'b','ok'
           done()
+
+      it 'should parse no rows', (done) ->
+        m = require '..'
+        count = 0
+        thru = m.thru (prefix) ->
+          prefix.length is 2 and prefix[0] is 'rows'
+        thru Request.get 'http://127.0.0.1:3000/norows'
+        .on 'data', ({prefix,value}) ->
+          count++
+        .on 'end', ->
+          if count is 0
+            done()
+          else
+            done new Error "Expected 0, found #{count}"
+
+      it 'should parse one row', (done) ->
+        m = require '..'
+        count = 0
+        thru = m.thru (prefix) ->
+          prefix.length is 2 and prefix[0] is 'rows'
+        thru Request.get 'http://127.0.0.1:3000/onerow'
+        .on 'data', ({prefix,value}) ->
+          count++
+        .on 'end', ->
+          if count is 1
+            done()
+          else
+            done new Error "Expected 1, found #{count}"
+
+      it 'should parse two rows', (done) ->
+        m = require '..'
+        count = 0
+        thru = m.thru (prefix) ->
+          prefix.length is 2 and prefix[0] is 'rows'
+        thru Request.get 'http://127.0.0.1:3000/tworows'
+        .on 'data', ({prefix,value}) ->
+          count++
+        .on 'end', ->
+          if count is 2
+            done()
+          else
+            done new Error "Expected 2, found #{count}"
