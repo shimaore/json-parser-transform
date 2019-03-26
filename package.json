@@ -7,7 +7,7 @@
     "build": "npm install --only=dev && coffee -c *.coffee.md",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build && coffee -c test/*.coffee.md",
-    "test": "nyc mocha"
+    "test": "nyc mocha --check-leaks"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "superagent": "^4.1.0"
   },
   "dependencies": {
-    "parser-transform": "^1.0.2",
+    "parser-transform": "^1.0.4",
     "pump": "^3.0.0",
     "utf8-stream": "0.0.0"
   }
